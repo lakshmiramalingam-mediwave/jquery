@@ -1,10 +1,11 @@
-$(document).ready(function () {
-  const lrr = [];
+document.ready(function () {
+  const data = [];
+  const specialCharacterRegex = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/;
   btnSubmit = $("#submit");
   btnSubmit.click(function (e) {
     e.preventDefault();
     const email = $("#username").val();
-    const password = $("#pass").val();
+    const password = $("#password").val();
     const item = {
       id: new Date().getTime(),
       email: email,
@@ -12,12 +13,16 @@ $(document).ready(function () {
     };
     if (email) {
       if (password.length >= 8) {
-        const profile = {
-          email: email,
-          password: password,
-        };
-        lrr.push(profile);
-        console.log(JSON.stringify(lrr));
+        if (specialCharacterRegex.test(password)) {
+          const profile = {
+            email: email,
+            password: password,
+          };
+          data.push(profile);
+          console.log(JSON.stringify(data));
+        } else {
+          alert("Password must contain at least one special character");
+        }
       } else {
         alert(" password should be atleast 8 character");
       }
